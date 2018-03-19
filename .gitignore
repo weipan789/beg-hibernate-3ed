@@ -1,4 +1,4 @@
 *.class
 *.jar
 *.iml
-idea/
+.idea/
