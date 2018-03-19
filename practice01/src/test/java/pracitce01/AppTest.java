@@ -10,6 +10,7 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +52,25 @@ public class AppTest {
         session.close();
     }
 
+    @Test
+    public void saveComputer() {
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+
+        for (int i = 1; i < 3; i++) {
+            Map computer = new HashMap();
+            computer.put("id", i);
+            computer.put("os", "mac os");
+            computer.put("cpu", "i73770");
+            computer.put("monitor", "p2415");
+            session.save("Computer", computer);
+        }
+
+        tx.commit();
+        session.close();
+    }
+
+
     @Test(dependsOnMethods = "saveStudent")
     public void findStudents() {
         Session session = factory.openSession();
@@ -60,6 +80,21 @@ public class AppTest {
         System.out.println(list.size());
         Map s=list.get(0);
         assert Integer.valueOf(s.get("id").toString()) == 1;
+
+        session.close();
+    }
+
+    @Test(dependsOnMethods = {"saveStudent","saveComputer"})
+    public void findStudentsAndcomuters() {
+        Session session = factory.openSession();
+        //@SuppressWarnings("unchecked")
+        List list = (List) session.createQuery("from Student,Computer").list();
+
+        for(Iterator it=list.iterator();it.hasNext();) {
+            Object[] objs = (Object[]) it.next();
+            System.out.println(objs[0]);
+            System.out.println(objs[1]);
+        }
 
         session.close();
     }

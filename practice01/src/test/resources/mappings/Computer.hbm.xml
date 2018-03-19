@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+   <class entity-name="Computer" table="computer">
+      <meta attribute="class-description">
+         This class contains the computer detail.
+      </meta>
+      <id name="id" type="int" column="id">
+         <generator class="native"/>
+      </id>
+      <property name="cpu"  type="string"/>
+      <property name="monitor"  type="string"/>
+      <property name="os"  type="string"/>
+   </class>
+</hibernate-mapping>
